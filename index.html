@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaynix Co | Conversion-Focused Web Design for UAE Service Businesses</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Define Matte Black Accent Color and Premium Gold Backgrounds */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5E5C0; /* Base Premium Gold/Champagne */
+            color: #121212; /* Default text is Matte Black */
+            scroll-behavior: smooth;
+            --color-matte-black: #121212; /* Matte Black Accent */
+        }
+        /* Custom Matte Black Utility Classes */
+        .text-black-custom { color: var(--color-matte-black); }
+        .bg-black-custom { background-color: var(--color-matte-black); }
+        .border-black-custom { border-color: var(--color-matte-black); }
+
+        /* Custom Gold Backgrounds for layering */
+        .bg-gold-base { background-color: #F5E5C0; } /* Lightest Gold */
+        .bg-gold-layer { background-color: #EFE3C3; } /* Layered Gold */
+
+        .cta-button {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            /* New: Matte Black shadow */
+            box-shadow: 0 4px 15px rgba(18, 18, 18, 0.4); 
+        }
+        /* Overriding header background to gold with slight transparency */
+        .bg-header-gold { background-color: rgba(245, 229, 192, 0.95); } 
+        
+        /* Adjusting text colors for readability against light gold */
+        .text-gray-900 { color: #1f2937; } /* Deep dark gray for accents */
+        .text-gray-700 { color: #374151; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-500 { color: #6b7280; }
+
+        /* Custom Hamburger Icon Styling */
+        .hamburger-icon-container {
+            width: 32px; /* Overall size */
+            height: 32px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px; /* Padding for click area */
+            transition: opacity 0.2s ease-in-out;
+        }
+        .hamburger-icon-container:hover {
+            opacity: 0.7;
+        }
+        .hamburger-line {
+            width: 28px; /* Width of the lines */
+            height: 3px; /* Thickness of the lines */
+            background-color: var(--color-matte-black);
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+            position: absolute; /* For animation positioning */
+        }
+        .hamburger-line:nth-child(1) { top: 6px; }
+        .hamburger-line:nth-child(2) { top: 14.5px; } /* Center line */
+        .hamburger-line:nth-child(3) { top: 23px; }
+
+        /* Transform to 'X' for active state */
+        .hamburger-icon-container.active .hamburger-line:nth-child(1) {
+            top: 14.5px; /* Move to center */
+            transform: rotate(45deg);
+        }
+        .hamburger-icon-container.active .hamburger-line:nth-child(2) {
+            opacity: 0; /* Hide middle line */
+            transform: translateX(100%);
+        }
+        .hamburger-icon-container.active .hamburger-line:nth-child(3) {
+            top: 14.5px; /* Move to center */
+            transform: rotate(-45deg);
+        }
+
+        /* Back to Top Button Styling */
+        #back-to-top {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000; /* High z-index to stay on top */
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            cursor: pointer;
+            transition: opacity 0.3s, background-color 0.3s;
+        }
+        #back-to-top:hover {
+            opacity: 0.8;
+        }
+
+        /* --- SCROLL ANIMATION CLASSES (FASTER) --- */
+        .animate-hidden {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        .animate-reveal {
+            opacity: 1;
+            transform: translateY(0);
+            /* Speed change: Reduced from 0.7s to 0.4s */
+            transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        /* --- END SCROLL ANIMATION CLASSES --- */
+
+
+        /* --- NAVIGATION HOVER EFFECT (Slide-In Underline) --- */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            overflow: hidden; /* Ensures the line is hidden until hover */
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px; /* Thickness of the underline */
+            background-color: var(--color-matte-black);
+            transform: translateX(-100%); /* Start off-screen to the left */
+            transition: transform 0.3s ease-out;
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(0); /* Slide fully onto the screen */
+        }
+        /* --- END NAVIGATION HOVER EFFECT --- */
+    </style>
+</head>
+<body id="top"> <!-- Target anchor for Back to Top link -->
+
+    <!-- Header & Navigation (STICKY: Always visible at the top) -->
+    <header class="sticky top-0 z-50 bg-header-gold backdrop-blur-sm shadow-xl border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-3xl font-extrabold text-black-custom" data-animate>
+                Zaynix <span class="text-gray-900">Co</span>
+            </div>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6">
+                <!-- Added nav-link class to all internal anchors -->
+                <a href="#services" class="text-gray-900 hover:text-black-custom font-semibold transition duration-150 nav-link">Services</a>
+                <a href="#results" class="text-gray-900 hover:text-black-custom font-semibold transition duration-150 nav-link">Case Studies</a>
+                <a href="#pricing" class="text-gray-900 hover:text-black-custom font-semibold transition duration-150 nav-link">Pricing</a>
+                <a href="#contact" class="px-4 py-2 bg-black-custom text-white rounded-lg font-semibold cta-button hover:opacity-90">Start Project</a>
+            </nav>
+            
+            <!-- Mobile Menu Icon (The Hamburger) -->
+            <div class="md:hidden" id="mobile-menu-button-wrapper" onclick="toggleMobileMenu()">
+                <div class="hamburger-icon-container">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Container (Hidden by default) -->
+    <nav id="mobile-menu" class="md:hidden hidden bg-gold-layer shadow-xl py-4 transition-all duration-300 ease-in-out border-b border-black-custom">
+        <a href="#services" class="block px-6 py-3 text-black-custom font-semibold hover:bg-gold-base transition duration-150" onclick="toggleMobileMenu()">Services</a>
+        <a href="#results" class="block px-6 py-3 text-black-custom font-semibold hover:bg-gold-base transition duration-150" onclick="toggleMobileMenu()">Case Studies</a>
+        <a href="#pricing" class="block px-6 py-3 text-black-custom font-semibold hover:bg-gold-base transition duration-150" onclick="toggleMobileMenu()">Pricing</a>
+        <a href="#contact" class="block mt-4 mx-4 px-6 py-3 bg-black-custom text-white rounded-lg font-bold cta-button text-center" onclick="toggleMobileMenu()">Start Project</a>
+    </nav>
+
+
+    <!-- 1. Hero Section: Niche Focus & Brutal Headline -->
+    <section class="py-20 md:py-32 text-center bg-gold-base border-b border-gray-300">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="text-black-custom text-lg font-medium uppercase tracking-widest mb-4" data-animate>STOP RELYING ON INSTAGRAM</p>
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-tight mb-8 text-black-custom" data-animate>
+                The UAE's Only Agency <span class="text-gray-700">Guaranteed to Convert</span> Local Traffic into Appointments & Reservations.
+            </h1>
+            <p class="text-xl text-gray-700 mb-10 max-w-2xl mx-auto" data-animate>
+                Your business in Dubai, Abu Dhabi, or Sharjah needs more than a digital brochure. We build high-ROI websites specialized for dentists, premium cafes, and service businesses.
+            </p>
+            <a href="#contact" class="px-10 py-4 bg-black-custom text-white text-xl font-bold rounded-xl shadow-2xl cta-button hover:opacity-90" data-animate>
+                Book Your 15-Min Conversion Audit
+            </a>
+            <p class="mt-4 text-sm text-gray-600" data-animate>Stop paying for clicks that don't book.</p>
+        </div>
+    </section>
+
+    <!-- 2. Specialization Section: The "Why You?" -->
+    <section id="services" class="py-16 md:py-24 bg-gold-layer border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-black-custom" data-animate>We Don't Serve Everyone. We Dominate Two Verticals.</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- Vertical 1: High-Value Appointments (Dentists, Salons, Spas) -->
+                <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-black-custom" data-animate>
+                    <h3 class="text-2xl font-bold mb-4 text-black-custom">The Appointment Pipeline</h3>
+                    <p class="text-gray-700 mb-6">
+                        You need clients in the chair, not just page views. We integrate directly with local booking software (e.g., Clinicea, Resurva) to cut down staff admin time and maximize chair utilization.
+                    </p>
+                    <ul class="space-y-3 text-gray-800">
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Optimized for Mobile Booking (80% of UAE traffic)</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Clear Service Authority and Pricing</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Multi-language structure support (Arabic/English)</li>
+                    </ul>
+                </div>
+
+                <!-- Vertical 2: F&B Revenue (Cafes, Restaurants) -->
+                <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-black-custom" data-animate>
+                    <h3 class="text-2xl font-bold mb-4 text-black-custom">F&B Digital Revenue</h3>
+                    <p class="text-gray-700 mb-6">
+                        Stop losing 30% to delivery apps. Your site must drive direct orders and table reservations. We prioritize direct menu views, high-quality visuals, and easy integration with local ordering systems.
+                    </p>
+                    <ul class="space-y-3 text-gray-800">
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Menu UX built for high Average Order Value (AOV)</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Instant reservation widgets (no broken links)</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-black-custom" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>Photo optimization for fast loading across UAE networks</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="text-center mt-12" data-animate>
+                <a href="#contact" class="text-black-custom hover:opacity-80 font-semibold underline">See if your business qualifies for our process &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. The Zaynix Process (The How) -->
+    <section id="process" class="py-16 md:py-24 bg-gold-base border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-black-custom" data-animate>Our Ruthless 3-Step Conversion Framework</h2>
+            <p class="text-xl text-gray-700 mb-12" data-animate>We don't "design websites." We implement tested conversion architecture.</p>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Step 1 -->
+                <div class="p-6 bg-gold-layer rounded-xl shadow-lg border-b-4 border-black-custom hover:opacity-90 transition duration-300" data-animate>
+                    <div class="text-4xl font-extrabold text-black-custom mb-3">01</div>
+                    <h3 class="text-xl font-semibold mb-3 text-black-custom">Conversion Blueprint</h3>
+                    <p class="text-gray-700">Forget wireframes. We analyze your competitors and establish the exact user flow required to generate an inquiry or a booking. This phase sets a measurable goal.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="p-6 bg-gold-layer rounded-xl shadow-lg border-b-4 border-black-custom hover:opacity-90 transition duration-300" data-animate>
+                    <div class="text-4xl font-extrabold text-black-custom mb-3">02</div>
+                    <h3 class="text-xl font-semibold mb-3 text-black-custom">Rapid Build & Integration</h3>
+                    <p class="text-gray-700">We build on a modern, fast stack (React/NextJS infrastructure) optimized for speed in the GCC region. We integrate all necessary booking, payment, and analytics tools.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="p-6 bg-gold-layer rounded-xl shadow-lg border-b-4 border-black-custom hover:opacity-90 transition duration-300" data-animate>
+                    <div class="text-4xl font-extrabold text-black-custom mb-3">03</div>
+                    <h3 class="text-xl font-semibold mb-3 text-black-custom">The Handover & Tune-Up</h3>
+                    <p class="text-gray-700">The site is launched with a 30-day monitoring period. We track goal completion and provide a final "Tune-Up Report" to ensure peak performance, *not* just a beautiful visual.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Pricing & Packages: Transparency Requirement -->
+    <section id="pricing" class="py-16 md:py-24 bg-gold-layer border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-black-custom" data-animate>Stop Wasting Time. Our Pricing is Clear.</h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Package 1: Starter -->
+                <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-gray-600 text-center" data-animate>
+                    <h3 class="text-2xl font-bold mb-3 text-black-custom">Launchpad Site</h3>
+                    <p class="text-4xl font-extrabold text-black-custom mb-6">
+                        AED 2,500
+                    </p>
+                    <p class="text-gray-700 mb-6">For new businesses needing a professional, fast, 2-page digital presence and a solid foundation.</p>
+                    <a href="#contact" class="w-full block py-3 bg-gray-600 text-white rounded-lg font-semibold cta-button hover:bg-gray-700">Inquire Now</a>
+                    <div class="mt-4 text-sm text-gray-500">
+                        <span class="cursor-pointer underline" onclick="toggleDetails('starter-details')">View Deliverables</span>
+                    </div>
+                    <ul id="starter-details" class="mt-4 text-left text-sm text-gray-700 space-y-2 hidden">
+                        <li>- 2 page static build (Home + Contact/Summary)</li>
+                        <li>- Mobile optimization</li>
+                        <li>- Basic SEO setup</li>
+                        <li>- 1x Contact Form</li>
+                    </ul>
+                </div>
+
+                <!-- Package 2: Core Conversion (Recommended) -->
+                <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-black-custom text-center relative transform scale-105" data-animate>
+                    <span class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Value</span>
+                    <h3 class="text-3xl font-bold mb-3 text-black-custom">Conversion Specialist</h3>
+                    <p class="text-5xl font-extrabold text-black-custom mb-6">
+                        AED 4,000 - 5,000
+                    </p>
+                    <p class="text-gray-800 mb-6">Our flagship package. Ideal for established UAE businesses who need guaranteed ROI from bookings and appointments.</p>
+                    <a href="#contact" class="w-full block py-4 bg-black-custom text-white text-lg rounded-lg font-bold cta-button hover:opacity-90">Secure Your Project Slot</a>
+                    <div class="mt-4 text-sm text-gray-500">
+                        <span class="cursor-pointer underline" onclick="toggleDetails('conversion-details')">View Deliverables</span>
+                    </div>
+                    <ul id="conversion-details" class="mt-4 text-left text-sm text-gray-700 space-y-2 hidden">
+                        <li>- Dedicated Booking/Reservation Integration</li>
+                        <li>- Custom Conversion-focused UI/UX</li>
+                        <li>- Advanced Technical SEO</li>
+                        <li>- 30-Day Performance Monitoring & Tune-Up</li>
+                    </ul>
+                </div>
+
+                <!-- Package 3: Enterprise -->
+                <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-gray-600 text-center" data-animate>
+                    <h3 class="text-2xl font-bold mb-3 text-black-custom">Full-Stack Partner</h3>
+                    <p class="text-4xl font-extrabold text-black-custom mb-6">
+                        Custom Quote
+                    </p>
+                    <p class="text-gray-700 mb-6">For multi-location businesses, franchising, or complex e-commerce requirements needing full infrastructure setup and consultation.</p>
+                    <a href="#contact" class="w-full block py-3 bg-gray-600 text-white rounded-lg font-semibold cta-button hover:bg-gray-700">Get Custom Quote</a>
+                    <div class="mt-4 text-sm text-gray-500">
+                        <span class="cursor-pointer underline" onclick="toggleDetails('enterprise-details')">View Deliverables</span>
+                    </div>
+                    <ul id="enterprise-details" class="mt-4 text-left text-sm text-gray-700 space-y-2 hidden">
+                        <li>- Infrastructure & Server Setup</li>
+                        <li>- Complex API/CRM Integrations</li>
+                        <li>- Ongoing Maintenance Contract</li>
+                        <li>- Dedicated Project Manager</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Case Study Mockup: Results are the Only Currency -->
+    <section id="results" class="py-16 md:py-24 bg-gold-base border-b border-gray-300">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-16 text-black-custom" data-animate>The Difference Between a Website and a Sales Tool.</h2>
+
+            <div class="bg-gold-layer p-8 md:p-12 rounded-xl shadow-3xl" data-animate>
+                <p class="text-sm font-semibold text-black-custom uppercase tracking-widest mb-2">Zaynix Case Study: Dentist</p>
+                <h3 class="text-3xl md:text-4xl font-bold text-black-custom mb-6">Dr. Al Khoury (JLT, Dubai)</h3>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div class="p-4 bg-gold-base rounded-lg" data-animate>
+                        <p class="text-gray-600 text-sm">BEFORE:</p>
+                        <p class="text-2xl font-extrabold text-red-700">12 Bookings/Month</p>
+                    </div>
+                    <div class="p-4 bg-gold-base rounded-lg" data-animate>
+                        <p class="text-gray-600 text-sm">AFTER ZAYNIX LAUNCH:</p>
+                        <p class="text-2xl font-extrabold text-green-700">38 Bookings/Month</p>
+                    </div>
+                    <div class="p-4 bg-gold-base rounded-lg" data-animate>
+                        <p class="text-gray-600 text-sm">RESULT:</p>
+                        <p class="text-2xl font-extrabold text-black-custom">217% Conversion Rate Increase</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-gray-700" data-animate>
+                    <p>
+                        <span class="font-bold text-black-custom">The Problem:</span> The old site was a beautiful picture gallery that failed to communicate authority or provide a clear path to booking. 90% of traffic bounced because the booking widget was broken on mobile devices.
+                    </p>
+                    <p>
+                        <span class="font-bold text-black-custom">The Zaynix Fix:</span> We redesigned the homepage above the fold to feature three immediate, specific service CTAs (Emergency, Whitening, Check-Up) and integrated a single-click booking flow using Clinicea. We also added a trust section featuring DHA certifications.
+                    </p>
+                    <p class="text-lg font-semibold text-black-custom">
+                        This is the *only* kind of outcome we deliver.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Qualifying Contact Form (The Gate) -->
+    <section id="contact" class="py-16 md:py-24 bg-gold-layer">
+        <div class="max-w-xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-black-custom" data-animate>Ready to Stop Wasting Money?</h2>
+            <p class="text-xl text-gray-700 text-center mb-10" data-animate>Use this form to qualify your project. We only work with serious clients.</p>
+            
+            <!-- Message Box for Success/Error (Now hidden by default as the URL is set) -->
+            <div id="message-box" class="p-4 rounded-lg text-center mb-4 hidden bg-red-900 text-red-300" role="alert">
+                <!-- Content will remain hidden unless an error is explicitly handled here later -->
+            </div>
+
+            <!-- ACTION URL IS SET -->
+            <form id="qualification-form" action="https://formspree.io/f/mqawbyjo" method="POST" class="bg-gold-base p-8 rounded-xl shadow-3xl space-y-6 border border-gray-300" data-animate>
+                
+                <input type="hidden" name="_subject" value="New Qualified Lead from Zaynix Website">
+                
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name / Title</label>
+                    <input type="text" id="name" name="Name" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-[#121212] focus:border-[#121212] text-black-custom" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Business Email</label>
+                    <input type="email" id="email" name="_replyto" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-[#121212] focus:border-[#121212] text-black-custom" required>
+                </div>
+
+                <hr class="border-gray-300">
+
+                <!-- Question 1: Business Type -->
+                <div>
+                    <label for="business_type" class="block text-sm font-medium text-gray-700 mb-1">
+                        1. What is your primary business type in the UAE?
+                    </label>
+                    <select id="business_type" name="Business Type" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-[#121212] focus:border-[#121212] text-black-custom" required>
+                        <option value="" disabled selected>Select Business Type</option>
+                        <option value="dental_clinic">Dental Clinic / Medical Service</option>
+                        <option value="cafe_restaurant">Cafe / Restaurant / F&B</option>
+                        <option value="salon_spa">Salon / Spa / Barbershop</option>
+                        <option value="other_service">Other High-Value Service Business</option>
+                    </select>
+                </div>
+
+                <!-- Question 2: Budget - RANGES ARE CORRECT -->
+                <div>
+                    <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">
+                        2. What is your approximate budget range for this web project?
+                    </label>
+                    <select id="budget" name="Budget Range (AED)" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-[#121212] focus:border-[#121212] text-black-custom" required>
+                        <option value="" disabled selected>Select Budget Range (AED)</option>
+                        <!-- Low threshold is based on the new 2500 price -->
+                        <option value="low">Under 2,500 (Project may be too small)</option>
+                        <!-- Launchpad value is correct -->
+                        <option value="mid">2,500 (Launchpad Site)</option>
+                        <!-- Conversion Specialist value is correct -->
+                        <option value="flagship">4,000 - 5,000 (Conversion Specialist)</option>
+                        <!-- High threshold is correct -->
+                        <option value="high">5,000+ (Full-Stack Partnership)</option>
+                    </select>
+                </div>
+
+                <!-- Question 3: Goal -->
+                <div>
+                    <label for="goal" class,"block text-sm font-medium text-gray-700 mb-1">
+                        3. What is the single #1 conversion goal for this new website?
+                    </label>
+                    <textarea id="goal" name="Conversion Goal" rows="3" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg focus:ring-[#121212] focus:border-[#121212] text-black-custom" placeholder="Example: Increase confirmed dental appointments by 30%." required></textarea>
+                </div>
+
+                <button type="submit" id="submit-button" class="w-full py-3 bg-black-custom text-white text-lg font-bold rounded-xl cta-button hover:opacity-90 shadow-xl">
+                    Submit & Start My Conversion Audit
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gold-base border-t border-gray-300 text-center text-gray-600 text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2025 Zaynix Co. Conversion-Focused Web Solutions for the UAE Market.</p>
+            <p class="mt-2">Dubai | Abu Dhabi. <a href="#" class="underline hover:text-black-custom">Privacy Policy</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#top" id="back-to-top" class="rounded-full bg-black-custom text-white shadow-xl flex items-center justify-center cta-button">
+        <!-- SVG for Up Arrow Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+        </svg>
+    </a>
+
+    <script>
+        /**
+         * Toggles the visibility of the mobile navigation menu and swaps the icon.
+         */
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            const hamburgerIconContainer = document.querySelector('.hamburger-icon-container');
+
+            if (menu && hamburgerIconContainer) {
+                // Toggle the 'hidden' class on the menu
+                menu.classList.toggle('hidden');
+                
+                // Toggle the 'active' class on the hamburger icon container for animation
+                hamburgerIconContainer.classList.toggle('active');
+            }
+        };
+
+        /**
+         * Toggles the visibility of the deliverables list in the pricing section.
+         */
+        window.toggleDetails = function(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.toggle('hidden');
+            }
+        };
+
+        /**
+         * Logic to show/hide the "Back to Top" button on scroll.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+             const backToTopButton = document.getElementById('back-to-top');
+
+             // 1. Back to Top Button Visibility Logic
+             window.onscroll = function() {
+                // Show the button after scrolling 400px down from the top
+                if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                    backToTopButton.style.display = "flex";
+                } else {
+                    backToTopButton.style.display = "none";
+                }
+             };
+
+             // 2. Intersection Observer for Scroll Animations
+             setupScrollAnimations();
+        });
+
+        /**
+         * Sets up the Intersection Observer to apply the 'animate-reveal' class 
+         * when elements with 'data-animate' enter the viewport.
+         */
+        function setupScrollAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the item is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('animate-hidden');
+                        entry.target.classList.add('animate-reveal');
+                        observer.unobserve(entry.target); // Stop observing once revealed
+                    }
+                });
+            }, observerOptions);
+
+            // Find all elements marked for animation
+            const animatedElements = document.querySelectorAll('[data-animate]');
+
+            animatedElements.forEach((el, index) => {
+                // Apply initial hidden state and stagger the delay slightly
+                el.classList.add('animate-hidden');
+                // Stagger speed change: Reduced from 50ms to 30ms
+                el.style.transitionDelay = `${index * 30}ms`; 
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>
