@@ -17,10 +17,6 @@
             scroll-behavior: smooth;
             --color-matte-black: #121212; /* Matte Black Accent */
         }
-
-        
-
-        
         /* Custom Matte Black Utility Classes */
         .text-black-custom { color: var(--color-matte-black); }
         .bg-black-custom { background-color: var(--color-matte-black); }
@@ -275,13 +271,29 @@
     <!-- 4. Pricing & Packages: Transparency Requirement -->
     <section id="pricing" class="py-16 md:py-24 bg-gold-layer border-b border-gray-300">
         <div class="max-w-7xl mx-auto px-4">
+            
+            <!-- PROMOTIONAL BANNER with COUNTDOWN TIMER - BLACK BORDER ADDED -->
+            <div id="promo-banner" class="bg-gold-base text-black-custom p-4 rounded-xl shadow-2xl mb-12 text-center transform scale-105 border-4 border-black-custom" data-animate>
+                <p class="text-lg font-bold uppercase tracking-wider mb-2">🔥 Limited Time Offer: 30% Off ALL Packages!</p>
+                <!-- Countdown Display Area - Remains bright red for urgency -->
+                <div id="countdown" class="text-4xl font-mono text-red-700 inline-block px-2 py-1 rounded-lg">
+                    <!-- Timer will be injected here by JavaScript -->
+                    Loading...
+                </div>
+                <p class="text-sm mt-2">Secure this rate before the timer hits zero.</p>
+            </div>
+            <!-- END PROMOTIONAL BANNER -->
+
             <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-black-custom" data-animate>Stop Wasting Time. Our Pricing is Clear.</h2>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Package 1: Starter -->
                 <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-gray-600 text-center" data-animate>
                     <h3 class="text-2xl font-bold mb-3 text-black-custom">Launchpad Site</h3>
-                    <p class="text-4xl font-extrabold text-black-custom mb-6">
+                    <p class="text-4xl font-extrabold text-black-custom mb-1">
+                        AED 1,750
+                    </p>
+                    <p class="text-lg font-medium text-red-600 line-through mb-4">
                         AED 2,500
                     </p>
                     <p class="text-gray-700 mb-6">For new businesses needing a professional, fast, 2-page digital presence and a solid foundation.</p>
@@ -301,15 +313,28 @@
                 <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-black-custom text-center relative transform scale-105" data-animate>
                     <span class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Value</span>
                     <h3 class="text-3xl font-bold mb-3 text-black-custom">Conversion Specialist</h3>
-                    <p class="text-5xl font-extrabold text-black-custom mb-6">
+                    <p class="text-5xl font-extrabold text-black-custom mb-1">
+                        AED 2,800 - 3,500
+                    </p>
+                    <p class="text-xl font-medium text-red-600 line-through mb-4">
                         AED 4,000 - 5,000
                     </p>
                     <p class="text-gray-800 mb-6">Our flagship package. Ideal for established UAE businesses who need guaranteed ROI from bookings and appointments.</p>
                     <a href="#contact" class="w-full block py-4 bg-black-custom text-white text-lg rounded-lg font-bold cta-button hover:opacity-90">Secure Your Project Slot</a>
                     <div class="mt-4 text-sm text-gray-500">
                         <span class="cursor-pointer underline" onclick="toggleDetails('conversion-details')">View Deliverables</span>
-                    </div>
-                    <ul id="conversion-details" class="mt-4 text-left text-sm text-gray-700 space-y-2 hidden">
+
+                <section id="contact" class="py-16 md:py-24 bg-gold-layer">
+        <div class="max-w-xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-black-custom" data-animate>Ready to Stop Wasting Money?</h2>
+            <p class="text-xl text-gray-700 text-center mb-10" data-animate>Use this form to qualify your project. We only work with serious clients.</p>
+            
+            <!-- Message Box for Success/Error (Now hidden by default as the URL is set) -->
+            <div id="message-box" class="p-4 rounded-lg text-center mb-4 hidden bg-red-900 text-red-300" role="alert">
+                <!-- Content will remain hidden unless an error is explicitly handled here later -->
+            </div>
+
+<ul id="conversion-details" class="mt-4 text-left text-sm text-gray-700 space-y-2 hidden">
                         <li>- Dedicated Booking/Reservation Integration</li>
                         <li>- Custom Conversion-focused UI/UX</li>
                         <li>- Advanced Technical SEO</li>
@@ -320,10 +345,11 @@
                 <!-- Package 3: Enterprise -->
                 <div class="bg-gold-base p-8 rounded-xl shadow-2xl border-t-4 border-gray-600 text-center" data-animate>
                     <h3 class="text-2xl font-bold mb-3 text-black-custom">Full-Stack Partner</h3>
+                    <!-- No fixed price, so only adding the discount contextually -->
                     <p class="text-4xl font-extrabold text-black-custom mb-6">
                         Custom Quote
                     </p>
-                    <p class="text-gray-700 mb-6">For multi-location businesses, franchising, or complex e-commerce requirements needing full infrastructure setup and consultation.</p>
+                    <p class="text-gray-700 mb-6">For multi-location businesses, franchising, or complex e-commerce requirements needing full infrastructure setup and consultation. <span class="font-bold text-red-600">(30% rate applied to final quote)</span></p>
                     <a href="#contact" class="w-full block py-3 bg-gray-600 text-white rounded-lg font-semibold cta-button hover:bg-gray-700">Get Custom Quote</a>
                     <div class="mt-4 text-sm text-gray-500">
                         <span class="cursor-pointer underline" onclick="toggleDetails('enterprise-details')">View Deliverables</span>
@@ -452,6 +478,7 @@
         </div>
     </section>
 
+
     <!-- Footer -->
     <footer class="py-10 bg-gold-base border-t border-gray-300 text-center text-gray-600 text-sm">
         <div class="max-w-7xl mx-auto px-4">
@@ -469,6 +496,70 @@
     </a>
 
     <script>
+        // --- COUNTDOWN TIMER LOGIC ---
+        function startCountdown() {
+            // FIX: This is the FIXED, ABSOLUTE EXPIRY DATE for the promotion. 
+            // (Set to Nov 29, 2025, 00:00:00 GMT for 10-day promotion simulation)
+            const fixedExpiryDate = new Date("November 29, 2025 00:00:00 GMT").getTime();
+            
+            const banner = document.getElementById('promo-banner');
+            const countdownElement = document.getElementById("countdown");
+            
+            // Function to update the banner state (used on load and on expiry)
+            function showOfferExpired() {
+                if (banner) {
+                    // Remove active styles: gold background, black text, scale, black border
+                    banner.classList.remove('bg-gold-base', 'text-black-custom', 'scale-105', 'border-black-custom'); 
+                    // Add expired/muted styles: light gray background, dark gray text, no scale
+                    banner.classList.add('bg-gray-200', 'text-gray-700', 'scale-100');
+                    
+                    // The expired message content
+                    banner.innerHTML = '<p class="text-xl font-bold uppercase tracking-wider text-gray-900">Offer Ended.</p><p class="text-lg mt-1">Contact us for standard pricing.</p>';
+                }
+            }
+
+            // 1. INITIAL CHECK: If the offer is already over when the page loads, do not start the timer.
+            const initialDistance = fixedExpiryDate - new Date().getTime();
+            if (initialDistance < 0) {
+                showOfferExpired();
+                return; // Stop execution immediately if expired
+            }
+
+            // 2. START THE INTERVAL if the offer is still active
+            const countdownInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = fixedExpiryDate - now;
+
+                // When the count down is finished
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    showOfferExpired();
+                    return;
+                }
+
+                // Time calculations for days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Ensure two digits for hours, minutes, and seconds
+                const formatTime = (time) => String(time).padStart(2, '0');
+
+                // Output the result in bright red
+                if (countdownElement) {
+                    countdownElement.innerHTML = 
+                        `<span class="font-extrabold text-2xl sm:text-4xl">${days}D</span> : 
+                         <span class="font-extrabold text-2xl sm:text-4xl">${formatTime(hours)}H</span> : 
+                         <span class="font-extrabold text-2xl sm:text-4xl">${formatTime(minutes)}M</span> : 
+                         <span class="font-extrabold text-2xl sm:text-4xl">${formatTime(seconds)}S</span>`;
+                }
+
+            }, 1000);
+        }
+        // --- END COUNTDOWN TIMER LOGIC ---
+
+
         /**
          * Toggles the visibility of the mobile navigation menu and swaps the icon.
          */
@@ -513,6 +604,9 @@
 
              // 2. Intersection Observer for Scroll Animations
              setupScrollAnimations();
+             
+             // 3. Start the Countdown
+             startCountdown();
         });
 
         /**
@@ -542,7 +636,7 @@
             animatedElements.forEach((el, index) => {
                 // Apply initial hidden state and stagger the delay slightly
                 el.classList.add('animate-hidden');
-                // Stagger speed change: Reduced from 50ms to 30ms
+                // The stagger speed is 30ms for a snappier feel
                 el.style.transitionDelay = `${index * 30}ms`; 
                 observer.observe(el);
             });
